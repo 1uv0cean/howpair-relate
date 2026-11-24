@@ -1,0 +1,26 @@
+export const demoQuestion = '약속이 자꾸 틀어졌을 때, 뒤에 정한 방법을 실제로 지켰어?';
+
+export const questions = [
+  { id: 'plans', group: 'connected', couple: 'morning', question: demoQuestion, relevant: ['plans-01', 'plans-02', 'plans-03'] },
+  { id: 'reply', group: 'connected', couple: 'morning', question: '답장이 늦어서 기다리던 일이 있고 나서, 실제로 달라졌어?', relevant: ['reply-01', 'reply-02', 'reply-03'] },
+  { id: 'trip', group: 'connected', couple: 'morning', question: '여행 예산 문제 뒤에 세운 기준을 예약 때에도 지켰어?', relevant: ['trip-01', 'trip-02', 'trip-03'] },
+  { id: 'visit', group: 'connected', couple: 'morning', question: '가족 식사에 늦었던 일 이후에, 실제로 일찍 도착한 날도 있어?', relevant: ['visit-01', 'visit-02', 'visit-03'] },
+  { id: 'early', group: 'connected', couple: 'evening', question: '지하철 놓쳐서 지각한 뒤에 둘이 정한 규칙은 실제로 어땠어?', relevant: ['early-01', 'early-02', 'early-03'] },
+  { id: 'noise', group: 'connected', couple: 'evening', question: '밤에 통화 소리 때문에 잠을 못 잔 뒤에 정한 방법이 실제로 효과가 있었어?', relevant: ['noise-01', 'noise-02', 'noise-03'] },
+  { id: 'food', group: 'connected', couple: 'evening', question: '음식을 버렸던 일 이후에, 다시 주문한 건 어떻게 됐어?', relevant: ['food-01', 'food-02', 'food-03'] },
+  { id: 'bill', group: 'connected', couple: 'evening', question: '공과금을 연체할 뻔한 뒤에 둘이 정한 방법을 실제로 써봤어?', relevant: ['bill-01', 'bill-02', 'bill-03'] },
+  { id: 'dentist', group: 'single', couple: 'morning', question: '치과 시간을 몇 시로 잡았어?', relevant: ['m-dentist'] },
+  { id: 'cake', group: 'single', couple: 'morning', question: '동생 생일 케이크는 뭘로 골랐어?', relevant: ['m-cake'] },
+  { id: 'e-station', group: 'single', couple: 'evening', question: '공사 중인 역에서 어디로 나오라고 했어?', relevant: ['e-station'] },
+  { id: 'e-cab', group: 'single', couple: 'evening', question: '병원 접수 언제까지라고 했어?', relevant: ['e-cab'] },
+  { id: 'explicit-day', group: 'single', couple: 'morning', question: '카톡에서 여행 숙소 상한이 얼마였어?', from: '2026-11-11', through: '2026-11-11', relevant: ['trip-02'] },
+  { id: 'within-window', group: 'connected', couple: 'evening', question: '잠을 못 잔 일 뒤에 뭘 정했어?', from: '2026-11-05', through: '2026-11-10', relevant: ['noise-01', 'noise-02'] },
+  { id: 'exclude-early', group: 'connected', couple: 'morning', question: '약속을 잡는 방법을 정한 뒤에 실제로 만났어?', from: '2026-11-05', through: '2026-11-10', relevant: ['plans-02', 'plans-03'] },
+  { id: 'outside-archive', group: 'empty', couple: 'morning', question: '약속이 틀어진 뒤에 어떻게 했어?', from: '2026-10-01', through: '2026-10-31', relevant: [] },
+  { id: 'foreign-couple', group: 'empty', couple: 'evening', question: '강릉 숙소 결제 날짜와 금액을 알 수 있어?', relevant: [] },
+  { id: 'missing-topic', group: 'empty', couple: 'morning', question: '고양이 예방접종에 대해 얘기한 적 있어?', relevant: [] },
+  { id: 'plans-paraphrase', group: 'stress', couple: 'morning', question: '전날에 한 번씩 확인하기로 한 거, 기다리는 시간이 줄었어?', relevant: ['plans-02', 'plans-03'] },
+  { id: 'plans-distractor', group: 'stress', couple: 'morning', question: '토요일 저녁 약속이 취소된 뒤에 둘이 다시 만나려고 정한 방식은 실제로 지켰어?', relevant: ['plans-01', 'plans-02', 'plans-03'] },
+  { id: 'noise-paraphrase', group: 'stress', couple: 'evening', question: '이어폰을 껴도 새어 나온 말소리, 방문이 문제였던 거야?', relevant: ['noise-02', 'noise-03'] },
+  { id: 'cross-episode', group: 'stress', couple: 'morning', question: '약속과 답장이 어긋난 뒤에 둘이 합의한 방법 두 가지가 뭐야?', relevant: ['plans-02', 'reply-02'] },
+];

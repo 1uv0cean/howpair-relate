@@ -1,0 +1,20 @@
+{
+  "name": "howpair-relate",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "demo": "node src/cli.mjs demo",
+    "benchmark": "node src/cli.mjs benchmark",
+    "inspect": "node src/cli.mjs inspect",
+    "seed": "node src/cli.mjs seed",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2",
+    "@relate/relate": "1.2.0"
+  }
+}
