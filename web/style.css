@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light;
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+  color: #202a25;
+  background: #f3f4ee;
+  line-height: 1.55;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(100% - 32px, 720px); margin: 0 auto; padding: 56px 0 40px; }
+header { margin-bottom: 26px; }
+header p { margin: 6px 0 0; color: #46564d; }
+.brand { font-size: .92rem; font-weight: 750; letter-spacing: -.02em; }
+.brand span { color: #30715a; }
+h1 { margin: 4px 0 0; font-size: clamp(2.15rem, 6vw, 3.05rem); line-height: 1.12; letter-spacing: -.065em; }
+.settings { display: flex; flex-wrap: wrap; gap: 12px 18px; margin-bottom: 16px; }
+.settings label { display: flex; gap: 6px; flex-direction: column; color: #46564d; font-size: .83rem; font-weight: 650; }
+select, textarea, button { font: inherit; }
+select, textarea { border: 1px solid #c9d3c8; border-radius: 9px; color: inherit; background: #fff; }
+select { min-height: 44px; padding: 7px 12px; }
+.room { background: #fff; border: 1px solid #dce4dc; border-radius: 17px; padding: 20px; }
+#examples { display: flex; flex-wrap: wrap; gap: 8px; }
+#examples button { color: #284f41; background: #edf4ef; border: 1px solid #d4e5db; border-radius: 9px; padding: 8px 11px; text-align: left; }
+#thread { list-style: none; margin: 20px 0; padding: 0; display: grid; gap: 8px; }
+.turn { display: grid; gap: 8px; overflow-wrap: anywhere; }
+.ask { justify-self: end; max-width: 90%; margin: 0; padding: 9px 13px; background: #deeee3; border-radius: 11px 11px 1px 11px; }
+.reply { max-width: 92%; min-width: 0; margin-bottom: 8px; padding: 10px 14px; border: 1px solid #e0e7de; background: #f9faf7; border-radius: 1px 11px 11px 11px; }
+.reply p { margin: 0 0 7px; }
+.reply p:last-child { margin-bottom: 0; }
+summary { cursor: pointer; color: #365d4c; font-size: .87rem; }
+blockquote { margin: 6px 0; padding: 5px 8px; border-left: 2px solid #93b5a2; font-size: .86rem; }
+form { display: flex; align-items: flex-end; gap: 9px; }
+textarea { padding: 10px 12px; width: 100%; min-height: 68px; resize: vertical; }
+button { cursor: pointer; min-height: 44px; }
+#send { color: white; background: #245a46; border: 1px solid #245a46; border-radius: 9px; padding: 8px 16px; white-space: nowrap; }
+button:disabled { cursor: wait; opacity: .65; }
+:focus-visible { outline: 3px solid #3c7b63; outline-offset: 2px; }
+.status { min-height: 1.6em; margin: 7px 0 0; color: #46564d; font-size: .86rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 500px) {
+  main { padding-top: 30px; }
+  .room { padding: 13px; }
+  .reply { max-width: 100%; }
+}

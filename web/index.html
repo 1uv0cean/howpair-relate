@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HowPair · 카톡 상담</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/chat.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="brand">HowPair <span>×</span> Relate</p>
+      <h1>카톡 상담</h1>
+      <p>두 사람이 나눈 이야기를 날짜와 함께 확인해 보세요.</p>
+    </header>
+    <section class="settings" aria-label="검색 설정">
+      <label>합성 대화
+        <select id="couple">
+          <option value="morning">서아와 민준</option>
+          <option value="evening">유나와 하린</option>
+        </select>
+      </label>
+      <label>검색 방식
+        <select id="method">
+          <option value="curated">Relate · 미리 확인한 연결</option>
+          <option value="semantic">의미 검색</option>
+          <option value="automatic">Relate · 연결 자동 추출</option>
+        </select>
+      </label>
+    </section>
+    <section class="room" aria-label="상담 대화">
+      <div id="examples"></div>
+      <ol id="thread" aria-label="메시지" aria-live="polite"></ol>
+      <form id="composer">
+        <label for="question" class="sr-only">질문</label>
+        <textarea id="question" placeholder="카톡에서 궁금한 점을 물어보세요." maxlength="600" rows="2" required></textarea>
+        <button id="send" type="submit">보내기</button>
+      </form>
+      <p id="status" class="status" role="status"></p>
+    </section>
+  </main>
+</body>
+</html>

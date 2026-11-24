@@ -62,3 +62,37 @@ The scenes and graph links were authored for the prototype, and [the expected ev
 ## Submission provenance
 
 Created for the hackathon on November 24, 2026. The use case comes from HowPair's existing counseling feature. This repository contains newly written code and synthetic dialogue. It uses Relate 1.2.0, its native Node.js bindings and single-file store, Cypher, Transformers.js, and a pinned quantized ONNX build of multilingual E5. Codex helped author the prototype, synthetic examples, and documentation.
+
+## Try the chatbot
+
+The chatbot uses a local language model to write Korean answers. Open each answer's sources to see the original line and its date. You can switch between semantic search, automatic Relate links, and the manually reviewed graph. Follow-up questions use the preceding question in the same chat. Changing the sample couple clears that chat's history.
+
+Install [llama.cpp](https://github.com/ggml-org/llama.cpp/releases) and download the pinned [Qwen3 4B Instruct quantization](https://huggingface.co/bartowski/Qwen_Qwen3-4B-Instruct-2507-GGUF) (about 2.5 GB). Run the model and the web app in separate terminals from the repository directory.
+
+```sh
+mkdir -p .local/llm
+curl --fail --location \
+  'https://huggingface.co/bartowski/Qwen_Qwen3-4B-Instruct-2507-GGUF/resolve/ae44f08e1392f39c0e474af10c3ff8355c8b6688/Qwen_Qwen3-4B-Instruct-2507-Q4_K_M.gguf' \
+  --output .local/llm/model.gguf
+llama-server -m .local/llm/model.gguf --host 127.0.0.1 --port 18128 \
+  --ctx-size 8192 --parallel 1 --no-webui --log-disable
+```
+
+```sh
+npm ci
+npm run chat
+```
+
+Open [the local chat](http://127.0.0.1:18129/). Both the app and model listen on the loopback interface. The public chatbot contains fictional data only. It does not connect to the HowPair production database.
+
+### Compare generated answers
+
+```sh
+node src/chat-cli.mjs benchmark --case plans,trip,noise,explicit-day,foreign-couple,missing-topic,outside-archive,cross-episode
+```
+
+The command emits one JSON record per question and search method. It includes elapsed time, retrieved scene IDs, original cited lines, and predicted graph links. The `allRequiredSources` field checks whether the reply cites every scene labeled relevant in the retrieval benchmark. Some questions can be answered accurately using a subset. Read the text and citations to assess answer accuracy.
+
+The automatic mode asks the local model to identify links among the 12 best semantic candidates for a follow-up question. It checks the line IDs, chronology, and connection to the top-ranked scene before using Relate to traverse the proposed links. A valid line ID establishes that the text exists. Same-event continuity and the answer's interpretation must be assessed separately.
+
+In an eight-question synthetic run, each mode abstained on all three questions with no evidence. Two models were checked independently: local Qwen3-4B-Instruct and the GPT-6 Luna model HowPair uses for counseling by default. Luna with the reviewed graph answered whether the couple followed the scheduling plan. With semantic search or automatic links it abstained on that question. All three Luna modes missed the reply-time agreement when the question asked about two separate incidents. Local Qwen sometimes described a later intention instead of the action that actually happened, and supplied an unsupported explanation in the noise case despite valid citations. The answer experiment shows that the retrieved context can help and that exact citations do not guarantee a correct answer.

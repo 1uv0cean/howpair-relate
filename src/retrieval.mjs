@@ -5,7 +5,7 @@ const COMMON_WORDS = new Set([
   '우리', '카톡', '대화', '메시지', '그때', '언제', '있어', '어떻게', '뭐였어', '뭐야',
   'what', 'when', 'how', 'the', 'did', 'was', 'our', 'after', 'and', 'have', 'ever',
 ]);
-const MULTI_SCENE = /이후|그 뒤|나중에|뒤에|하고 나서|되풀이|반복|달라졌|실제로|지켰|어떻게 됐|\b(?:after|later|follow[- ]?up|changed|follow through|kept|actually)\b/i;
+const MULTI_SCENE = /이후|그 뒤|나중에|뒤에|뒤엔|하고 나서|되풀이|반복|달라졌|실제로|지켰|어떻게 됐|\b(?:after|later|follow[- ]?up|changed|follow through|kept|actually)\b/i;
 
 export function sceneText(scene) {
   return scene.lines.map(([, message]) => message).join('\n');
@@ -22,6 +22,19 @@ function sortHits(a, b) {
   return b.score - a.score || b.date.localeCompare(a.date) || a.id.localeCompare(b.id);
 }
 
+export function wantsTrail(question) {
+  return MULTI_SCENE.test(question);
+}
+
+export function rankSemantic(candidates, vectors, vector) {
+  return candidates.map(scene => {
+    const passage = vectors.get(scene.id);
+    if (passage?.length !== vector.length) throw new Error(`Missing or incompatible vector for ${scene.id}.`);
+    const score = passage.reduce((sum, value, i) => sum + value * vector[i], 0);
+    return { id: scene.id, date: scene.date, score };
+  }).sort(sortHits);
+}
+
 export function retrieve({ scenes, graph, vectors, vector, question, couple, from = '', through = '9999-12-31', timings = {} }) {
   const start = performance.now();
   const candidates = scenes.filter(scene => scene.couple === couple && scene.date >= from && scene.date <= through);
@@ -33,18 +46,13 @@ export function retrieve({ scenes, graph, vectors, vector, question, couple, fro
 
   const semanticStart = performance.now();
   timings.keyword = semanticStart - start;
-  const ranked = candidates.map(scene => {
-    const passage = vectors.get(scene.id);
-    if (passage?.length !== vector.length) throw new Error(`Missing or incompatible vector for ${scene.id}.`);
-    const score = passage.reduce((sum, value, i) => sum + value * vector[i], 0);
-    return { id: scene.id, date: scene.date, score };
-  }).sort(sortHits);
+  const ranked = rankSemantic(candidates, vectors, vector);
   const semantic = ranked.slice(0, LIMIT);
   const graphStart = performance.now();
   timings.semantic = graphStart - semanticStart;
   timings.relate = timings.semantic;
   const seed = ranked[0];
-  if (!seed || !MULTI_SCENE.test(question)) return { keyword, semantic, relate: semantic };
+  if (!seed || !wantsTrail(question)) return { keyword, semantic, relate: semantic };
 
   const byId = new Map(ranked.map(hit => [hit.id, hit]));
   const chosen = new Map([[seed.id, seed]]);

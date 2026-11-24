@@ -11,7 +11,9 @@
     "benchmark": "node src/cli.mjs benchmark",
     "inspect": "node src/cli.mjs inspect",
     "seed": "node src/cli.mjs seed",
-    "test": "node --test"
+    "test": "node --test",
+    "chat": "node src/chat-cli.mjs serve",
+    "benchmark:answers": "node src/chat-cli.mjs benchmark"
   },
   "dependencies": {
     "@huggingface/transformers": "4.3.2",
